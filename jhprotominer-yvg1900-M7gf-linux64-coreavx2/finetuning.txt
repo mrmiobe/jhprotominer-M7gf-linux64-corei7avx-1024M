@@ -1,0 +1,73 @@
+Fine tuning yvg1900 PTS miner
+
+Most of performance optimizations are about tradeoffs… Imagine you have very fast CPU and very fast 
+memory reads, while memory writes give you big performance penalty. Then you would like to avoid 
+extra memory writes at cost of extra CPU loads by performing some extra comparisons in your code – 
+this may lead to better performance, but may not as well, this is all about tradeoffs.
+
+Some tradeoffs can be inferred from detectable hardware configuration – CPU model, available 
+instruction set, etc., but most are heavily dependent on particular system specifics – memory speed, OS 
+kernel configuration, virtualization, and many other parameters. Even more, some tradeoffs depend 
+completely on personal preference – do you plan to dedicate machine completely for mining tasks of 
+you plan to use it for something else, like browsing the Internet or listening music in background.
+
+Manually finding out the best setup is non-trivial task; it requires perfect discipline and care. So, I 
+decided to introduce built-in selection of algorithm variation that produces the best result in particular 
+case and specific usage scenario.
+
+1. Selecting miner version, memory size and thread count.
+
+Before you can use fine tuning feature, you must decide which version of miner you would like to use, 
+how much RAM you would like to allocate for miner use, and how many threads you would like it to run. 
+Picking these parameters is more matter of your personal preference, and there is a lot of information 
+on pros and cons of each setup. 
+
+There are some contradictory opinions on results on selection of instruction set related variations of 
+miner, but generally higher instruction set family leads to better mining performance. If you are in doubt 
+– feel free to make tests and compare results yourself.
+
+Short note about “f” and “s” versions of miner. Their existences also result of tradeoff that you shall 
+decide for yourself. Generally speaking, “f” version favors greater speed at the cost of higher share 
+rejection ratio. The other one – “s” version – puts more focus on higher share acceptance ratio at the 
+cost of speed. On slower systems “s” version produces better results, while “f” is a clear winner on 
+faster systems. Again, you shall test yourself and decide.
+
+Note that you cannot directly compare performance metrics (including CPM) produced by “f” and “s” 
+versions because of major difference in share rejection ratio.
+
+2. Activating fine tuning functionality
+
+Fine tuning is disabled by default. Miner will use settings similar to M7f version settings when fine 
+tuning is disabled.
+
+To enable fine tuning you shall add -F 0 parameter when launching miner.
+
+When fine tuning is enabled, miner will perform tests for each available algorithm variation and 
+calculate appropriate scores. Lower score is better, scores are comparable within rejection ratio 
+variation group for given number of threads, i.e. scores from “f” variations can be directly compared 
+with scores from “f” variations utilizing other instruction set, given that -t parameter remains the same 
+during both tests.
+
+As soon as fine tuning measurement stage progresses, you will see more scores displayed at every 
+statistics display step. As soon as measurement stage finishes, miner will automatically select one with 
+best score and proceed with selected algorithm variation until terminated. You can see currently 
+selected variation as a value of AV parameter.
+
+Note that fine tuning stage may take long time to complete. 
+
+3. Enforcing miner to use specific algorithm variation
+
+As you may guess, miner operation is suboptimal during fine tune measurement stage. If you already 
+know your optimal algorithm variation, you may wish to bypass fine tuning measurement stage and 
+force miner to use specific algorithm variation. To do this simply specify desired algorithm variation as a 
+value of -F parameter when launching miner.
+
+Good luck mining,
+yvg1900
+
+Consider donating to support further performance enhancements:
+PTS: PZxsEQoiMeB6tHcW2ZySBEiCPio1WkxbEL
+XPM: AW2388DEWNEfMH4rP9kcj9yKcMq1QywYT4
+DTC: D6PmUogMigWvXurgFTqm5VLxQeVpXdYQj3
+LTC: Lby4YjhcAxhmbsdHFb4nYydrwGoiJezZt1
+BTC: 1FxekeK5La7AuF3oxiLzPKnjXyLMrux6VT
